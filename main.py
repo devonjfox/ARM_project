@@ -5,9 +5,34 @@ def load_csv_into_dataframe(location_of_csv):
     return pandas.read_csv(location_of_csv)
 
 
+def get_client_records_by_state(dataframe, state):
+    return dataframe.loc[df['STATEFIP'] == state]
+
+
+def get_occurrences_of_depression_in_state(base_dataframe, state_code):
+    state_df = get_client_records_by_state(base_dataframe, state_code)
+    diagnosis_in_state = state_df[['MH1', 'MH2', 'MH3']].copy()
+    # Get all occurances of depression code (7) in MH1, MH2 OR MH3
+    depression_code = 7
+    depression_in_state = diagnosis_in_state[
+        (diagnosis_in_state['MH1'] == depression_code) | (diagnosis_in_state['MH2'] == depression_code) | (
+                diagnosis_in_state['MH3'] == depression_code)]
+    return depression_in_state
+
 
 if __name__ == '__main__':
-    df = load_csv_into_dataframe("MHCLD_PUF_2018.csv")
+    csv = "MHCLD_PUF_2018.csv"
+    df = load_csv_into_dataframe(csv)
+
+    # Get records for Oregon
+    oregon_state_code = 41
+    depression_in_oregon = get_occurrences_of_depression_in_state(base_dataframe=df, state_code=oregon_state_code)
+
+    print(depression_in_oregon)
+
+    penn_state_code = 42
+    depression_in_penn = get_occurrences_of_depression_in_state(base_dataframe=df, state_code=penn_state_code)
+    print(depression_in_penn)
 
 
 #     np_array = df.to_numpy()

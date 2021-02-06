@@ -2,3 +2,4 @@
 MHCLD_PUF_2018.csv
 .idea/*
 /.ipynb_checkpoints/
+__pycache__*

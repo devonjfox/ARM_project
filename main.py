@@ -37,9 +37,7 @@ if __name__ == '__main__':
     df2 = pandas.read_csv(csv2, index_col=0)
 
     population = get_population(df2, '.Oregon', '2018')
-    print(type(population))
     print(population)
-    # assert population == 4181886
 
     # Get records for Oregon
     oregon_state_code = 41

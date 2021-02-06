@@ -9,6 +9,7 @@ def get_client_records_by_state(dataframe, state):
     return dataframe.loc[df['STATEFIP'] == state]
 
 
+
 def get_occurrences_of_depression_in_state(base_dataframe, state_code):
     state_df = get_client_records_by_state(base_dataframe, state_code)
     diagnosis_in_state = state_df[['MH1', 'MH2', 'MH3']].copy()

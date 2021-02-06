@@ -20,19 +20,26 @@ def get_occurrences_of_depression_in_state(base_dataframe, state_code):
     return depression_in_state
 
 
-def get_population(census_dataframe, year, state_name):
-    population_value = census_dataframe.iloc[census_dataframe[year] == state_name]
-    return population_value
+def get_population(census_dataframe, state_name, year):
+    """
+
+    :rtype: int
+    """
+    population_by_state = census_dataframe.loc[state_name]
+    population_by_year = population_by_state.loc[year]
+    return int(population_by_year)
 
 
 if __name__ == '__main__':
     csv = "MHCLD_PUF_2018.csv"
     df = load_csv_into_dataframe(csv)
     csv2 = "Census.csv"
-    df2 = load_csv_into_dataframe(csv2)
+    df2 = pandas.read_csv(csv2, index_col=0)
 
-    population = get_population(df2, '2018', '.Oregon')
+    population = get_population(df2, '.Oregon', '2018')
+    print(type(population))
     print(population)
+    # assert population == 4181886
 
     # Get records for Oregon
     oregon_state_code = 41

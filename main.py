@@ -4,15 +4,9 @@ import pandas
 def load_csv_into_dataframe(location_of_csv):
     return pandas.read_csv(location_of_csv)
 
-def load_csv_into_dataframe(location_of_csv):
-    return pandas.read_csv(location_of_csv)
 
 def get_client_records_by_state(dataframe, state):
     return dataframe.loc[df['STATEFIP'] == state]
-
-
-def get_population_by_state_2018(dataframe2, year):
-    return dataframe2.loc[df2['2018'] == year]
 
 
 def get_occurrences_of_depression_in_state(base_dataframe, state_code):
@@ -26,14 +20,19 @@ def get_occurrences_of_depression_in_state(base_dataframe, state_code):
     return depression_in_state
 
 
-# def get_population_of_state(Census_dataframe, year):
-# population_df =
+def get_population(census_dataframe, year, state_name):
+    population_value = census_dataframe.iloc[census_dataframe[year] == state_name]
+    return population_value
+
 
 if __name__ == '__main__':
     csv = "MHCLD_PUF_2018.csv"
     df = load_csv_into_dataframe(csv)
     csv2 = "Census.csv"
     df2 = load_csv_into_dataframe(csv2)
+
+    population = get_population(df2, '2018', '.Oregon')
+    print(population)
 
     # Get records for Oregon
     oregon_state_code = 41

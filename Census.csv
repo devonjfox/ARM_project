@@ -1,7 +1,4 @@
-﻿table with row headers in column A and column headers in rows 3 through 4. (leading dots indicate sub-parts),,,,,,,,,,,,
-"Table 1. Annual Estimates of the Resident Population for the United States, Regions, States, and Puerto Rico: April 1, 2010 to July 1, 2019",,,,,,,,,,,,
-Geographic Area,"April 1, 2010",,Population Estimate (as of July 1),,,,,,,,,
-,Census,Estimates Base,2010,2011,2012,2013,2014,2015,2016,2017,2018,2019
+﻿Geographic Area,Census,Estimates Base,2010,2011,2012,2013,2014,2015,2016,2017,2018,2019
 United States,"308,745,538","308,758,105","309,321,666","311,556,874","313,830,990","315,993,715","318,301,008","320,635,163","322,941,311","324,985,539","326,687,501","328,239,523"
 Northeast,"55,317,240","55,318,443","55,380,134","55,604,223","55,775,216","55,901,806","56,006,011","56,034,684","56,042,330","56,059,240","56,046,620","55,982,803"
 Midwest,"66,927,001","66,929,725","66,974,416","67,157,800","67,336,743","67,560,379","67,745,167","67,860,583","67,987,540","68,126,781","68,236,628","68,329,004"

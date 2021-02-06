@@ -35,14 +35,22 @@ def depression_rate(census_dataframe, state_name, year, basedataframe, state_cod
     print("Population of the Census Dataframe: " + population.__str__())
     depression_in_state = get_occurrences_of_depression_in_state(basedataframe, state_code)
     print("Rates of Depression in " + state_name + "")
-    total = len(depression_in_state.index)
+    total = total_records(depression_in_state)
     print("Calculating rates of depression...")
+    return rate_of_occurrence(total=total, population=population)
+
+
+def total_records(dataframe):
+    return len(dataframe.index)
+
+
+def rate_of_occurrence(total, population):
     return (total / population) * 100
 
 
 if __name__ == '__main__':
     csv = "MHCLD_PUF_2018.csv"
-    df = load_csv_into_dataframe(csv)
+    df = pandas.read_csv(csv)
     csv2 = "Census.csv"
     df2 = pandas.read_csv(csv2, index_col=0)
 

@@ -27,10 +27,14 @@ def get_population(census_dataframe, state_name, year):
     """
     population_by_state = census_dataframe.loc[state_name]
     population_by_year = population_by_state.loc[year]
-    return int(population_by_year)
+    return int(population_by_year.replace(',', ''))
 
-def depression_rate():
-    pass
+
+
+def depression_rate(census_dataframe, state_name, year, basedataframe, state_code):
+    population = get_population(census_dataframe, state_name, year)
+    depression_in_state = get_occurrences_of_depression_in_state(basedataframe, state_code)
+    return depression_in_state / population
 
 
 if __name__ == '__main__':
@@ -42,17 +46,11 @@ if __name__ == '__main__':
     population = get_population(df2, '.Oregon', '2018')
     print(population)
 
-    # Get records for Oregon
-    oregon_state_code = 41
-    depression_in_oregon = get_occurrences_of_depression_in_state(base_dataframe=df, state_code=oregon_state_code)
+    depression = depression_rate(df2, '.Oregon', '2018', df, '41')
+    print(depression)
 
-    print(depression_in_oregon)
 
-    # Get population data for Oregon
 
-    penn_state_code = 42
-    depression_in_penn = get_occurrences_of_depression_in_state(base_dataframe=df, state_code=penn_state_code)
-    print(depression_in_penn)
 
 #     np_array = df.to_numpy()
 #     #SE_mean = numpy.std(np_array, ddof = 1) / numpy.sqrt(numpy.size(np_array))

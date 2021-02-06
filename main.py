@@ -30,11 +30,14 @@ def get_population(census_dataframe, state_name, year):
     return int(population_by_year.replace(',', ''))
 
 
-
 def depression_rate(census_dataframe, state_name, year, basedataframe, state_code):
     population = get_population(census_dataframe, state_name, year)
+    print("Population of the Census Dataframe: " + population.__str__())
     depression_in_state = get_occurrences_of_depression_in_state(basedataframe, state_code)
-    return depression_in_state / population
+    print("Rates of Depression in " + state_name + "")
+    total = len(depression_in_state.index)
+    print("Calculating rates of depression...")
+    return total / population
 
 
 if __name__ == '__main__':
@@ -42,15 +45,12 @@ if __name__ == '__main__':
     df = load_csv_into_dataframe(csv)
     csv2 = "Census.csv"
     df2 = pandas.read_csv(csv2, index_col=0)
-
-    population = get_population(df2, '.Oregon', '2018')
-    print(population)
+    #
+    # population = get_population(df2, '.Oregon', '2018')
+    # print(population)
 
     depression = depression_rate(df2, '.Oregon', '2018', df, '41')
     print(depression)
-
-
-
 
 #     np_array = df.to_numpy()
 #     #SE_mean = numpy.std(np_array, ddof = 1) / numpy.sqrt(numpy.size(np_array))

@@ -22,12 +22,15 @@ def get_occurrences_of_depression_in_state(base_dataframe, state_code):
 
 def get_population(census_dataframe, state_name, year):
     """
-
+    Get population value as int given a census dataframe a state and a year
     :rtype: int
     """
     population_by_state = census_dataframe.loc[state_name]
     population_by_year = population_by_state.loc[year]
     return int(population_by_year)
+
+def depression_rate():
+    pass
 
 
 if __name__ == '__main__':

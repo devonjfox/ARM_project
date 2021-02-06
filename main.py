@@ -1,59 +1,20 @@
-import pandas
+import pandas as pd
 
-
-def load_csv_into_dataframe(location_of_csv):
-    return pandas.read_csv(location_of_csv)
-
-
-def get_client_records_by_state(df, state):
-    return df.loc[df['STATEFIP'] == int(state)]
-
-
-def get_occurrences_of_depression_in_state(base_dataframe, state_code):
-    state_df = get_client_records_by_state(base_dataframe, state_code)
-    diagnosis_in_state = state_df[['MH1', 'MH2', 'MH3']].copy()
-    # Get all occurances of depression code (7) in MH1, MH2 OR MH3
-    depression_code = 7
-    depression_in_state = diagnosis_in_state[
-        (diagnosis_in_state['MH1'] == depression_code) | (diagnosis_in_state['MH2'] == depression_code) | (
-                diagnosis_in_state['MH3'] == depression_code)]
-    return depression_in_state
-
-
-def get_population(census_dataframe, state_name, year):
-    """
-    Get population value as int given a census dataframe a state and a year
-    :rtype: int
-    """
-    population_by_state = census_dataframe.loc[state_name]
-    population_by_year = population_by_state.loc[year]
-    return int(population_by_year.replace(',', ''))
-
-
-def depression_rate(census_dataframe, state_name, year, basedataframe, state_code):
-    population = get_population(census_dataframe, state_name, year)
-    print("Population of the Census Dataframe: " + population.__str__())
-    depression_in_state = get_occurrences_of_depression_in_state(basedataframe, state_code)
-    print("Rates of Depression in " + state_name + "")
-    total = len(depression_in_state.index)
-    print("Calculating rates of depression...")
-    return (total / population) * 100
+from Depression import depression_rate
+from StateNameCodeMap import list_of_states
 
 
 if __name__ == '__main__':
     csv = "MHCLD_PUF_2018.csv"
-    df = load_csv_into_dataframe(csv)
     csv2 = "Census.csv"
-    df2 = pandas.read_csv(csv2, index_col=0)
 
-    # rate_of_depression = depression_rate(df2, '.Oregon', '2018', df, 41)
-    # print("Rate of Depression: " + str(rate_of_depression))
-
-    list_of_states = {'.Oregon': 41, '.Alabama': 1, '.Arizona': 4, '.California': 6}
+    df = pd.read_csv(csv)
+    df2 = pd.read_csv(csv2, index_col=0)
 
     for state, state_code in list_of_states.items():
-        rate_of_depression = depression_rate(df2, state, '2018', df, state_code)
-        print("Rate of Depression in " + state + ": " + str(rate_of_depression) + "\n")
+        rate_of_depression = depression_rate(census_dataframe=df2, state_name=state, year='2018', basedataframe=df,
+                                             state_code=state_code)
+        print("Rate of Depression in " + state.replace('.', '') + ": " + str(rate_of_depression) + "\n")
 
 #     np_array = df.to_numpy()
 #     #SE_mean = numpy.std(np_array, ddof = 1) / numpy.sqrt(numpy.size(np_array))

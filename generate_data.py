@@ -30,16 +30,16 @@ if __name__ == '__main__':
     # Create the dataframe from the collection of series
     # This is the numbers of occurrences of each FLG by state code
     diagnosis_by_state_dataframe = pandas.DataFrame(diagnosis_by_state)
+    print(diagnosis_by_state_dataframe)
 
     # Load the Census data into a dataframe
     census_csv = os.path.join(dirname, 'data/Census.csv')
     census = pandas.read_csv(census_csv, index_col=0)
-    print(census.head())
 
     # Clean Census Dataframe
     # Filter 2018 Data
     census_2018 = census.loc[:, '2018']
-    print(census_2018.head())
+    print(census_2018)
 
     list_of_states = {'.Alabama': 1, '.Arizona': 4, '.California': 6, '.Colorado': 8, '.Connecticut': 9,
                       '.Delaware': 10, '.District of Columbia': 11, '.Florida': 12, '.Hawaii': 15, '.Idaho': 16,
@@ -52,4 +52,9 @@ if __name__ == '__main__':
                       '.South Dakota': 46, '.Tennessee': 47, '.Texas': 48, '.Utah': 49, '.Vermont': 50, '.Virginia': 51,
                       '.Washington': 53, '.West Virginia': 54, '.Wisconsin': 55, '.Wyoming': 56}
 
-    rate_of_diagnosis = None
+    for name, code in list_of_states.items():
+        print(code)
+        print(name)
+        diagnosis_by_state_dataframe.iloc[code].apply(lambda x, y: x / y, args=(code,))
+
+    print(diagnosis_by_state_dataframe)

@@ -45,12 +45,25 @@ if __name__ == '__main__':
     # Returns the absolute path for the current file location
     dirname = os.path.dirname(__file__)
 
-    # Load the MHCLD into a dataframe
+    print("Load the MHCLD into a dataframe")
     mhcld_puf_2018_csv = os.path.join(dirname, 'data/MHCLD_PUF_2018.csv')
-    mhcld = load_csv_into_dataframe(mhcld_puf_2018_csv)
+    mhcld = pandas.read_csv(mhcld_puf_2018_csv, index_col=39)
     print(mhcld.head())
 
-    # Clean MHCLD Dataframe
+    print("Clean MHCLD Dataframe")
+    flg_df = mhcld.filter(regex="(.*FLG|STATEFIP)")
+    print(flg_df.head())
+
+    # Get the list of flags as a iterable to loop over it
+    flags = flg_df.columns
+    # Remove the Statefip from the list as we don't need to iterate over that
+    flags = flags.drop("STATEFIP")
+
+    for flag in flags:
+        diag_flg = flg_df[flg_df[flag] == 1]
+        series = diag_flg['STATEFIP'].value_counts().sort_index()
+        series.rename(flag, inplace=True)
+        print(series)
 
     # Load the Census data into a dataframe
     census_csv = os.path.join(dirname, 'data/Census.csv')

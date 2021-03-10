@@ -1,6 +1,8 @@
 import os
 
 import pandas
+import matplotlib.pyplot as plt
+
 
 if __name__ == '__main__':
     # Returns the absolute path for the current file location
@@ -69,3 +71,6 @@ if __name__ == '__main__':
     with pandas.option_context('display.max_rows', None, 'display.max_columns',
                                None):  # more options can be specified also
         print(diagnosis_by_state_dataframe)
+
+    diagnosis_by_state_dataframe.hist()
+    plt.show()

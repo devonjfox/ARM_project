@@ -1,8 +1,7 @@
 import os
-
+import numpy as np
 import pandas
 import matplotlib.pyplot as plt
-
 
 if __name__ == '__main__':
     # Returns the absolute path for the current file location
@@ -68,9 +67,13 @@ if __name__ == '__main__':
         diagnosis_by_state_dataframe.loc[code] = diagnosis_by_state_dataframe.loc[code].map(
             lambda x: calc_rate(x, population), na_action='ignore')
 
-    with pandas.option_context('display.max_rows', None, 'display.max_columns',
-                               None):  # more options can be specified also
-        print(diagnosis_by_state_dataframe)
+    axes = diagnosis_by_state_dataframe.plot.bar()
+    fig = axes.get_figure()
+    fig.savefig('.\data\\all_state_diag.pdf')
+    fig.clf()
 
-    diagnosis_by_state_dataframe.hist()
-    plt.show()
+    for index, row in diagnosis_by_state_dataframe.iterrows():
+        bar = row.plot.bar()
+        bar_fig = bar.get_figure()
+        bar_fig.savefig(f".\data\\{index}_bargraph.pdf")
+        plt.show()
